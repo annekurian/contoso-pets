@@ -299,6 +299,7 @@ do
             }
             if (ageComplete == true && descriptionComplete == true)
             {
+                Console.WriteLine("Age and Physical description fields are complete for all of our friends.");
                 Console.WriteLine("Press the Enter key to continue.");
                 readResult = Console.ReadLine();
             }
@@ -307,9 +308,59 @@ do
 
         case "4":
             // Ensure animal nicknames and personality descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
-            Console.WriteLine("Press the Enter key to continue.");
-            readResult = Console.ReadLine();
+            bool nickNameComplete = false;
+            bool personalityComplete = false;
+            for (int i = 0; i < maxPets; i++)
+            {
+                int petAge;
+                if (ourAnimals[i, 0] == "ID #: ")
+                    continue;
+                if (ourAnimals[i, 3] == "Nickname: ")
+                {
+                    do
+                    {
+                        Console.WriteLine($"Enter a nickname for {ourAnimals[i, 0]}");
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            animalNickname = readResult;
+                            if (animalNickname != "" && animalNickname != "tbd")
+                                nickNameComplete = true;
+                        }
+                        if (nickNameComplete)
+                        {
+                            ourAnimals[i, 3] = "Nickname: " + animalNickname;
+                        }
+                    } while (nickNameComplete == false);
+                }
+
+                if (ourAnimals[i, 5] == "Personality: " || ourAnimals[i, 4] == "Personality: tbd")
+                {
+                    do
+                    {
+                        Console.WriteLine($"Enter a personality description for {ourAnimals[i, 0]} (likes or dislikes, tricks, energy level)");
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            animalPersonalityDescription = readResult;
+                            if (animalPersonalityDescription != "" && animalPersonalityDescription != "tbd")
+                                personalityComplete = true;
+
+                        }
+                        if (personalityComplete)
+                        {
+                            ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
+                        }
+                    } while (personalityComplete == false);
+                }
+            }
+            if (nickNameComplete == true && personalityComplete == true)
+            {
+                Console.WriteLine("Nickname and Personality description fields are complete for all of our friends.");
+                Console.WriteLine("Press the Enter key to continue.");
+                readResult = Console.ReadLine();
+            }
+
             break;
 
         default:
